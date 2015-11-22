@@ -20,13 +20,16 @@ public class gableClient {
 				int nextAct = Integer.parseInt(scan.next());
 				switch(nextAct) {
 					case VISIT: 
+						// when used by the beacon detecter
 						c.send(VISIT);
 						break;
 					case REQUEST:
+						// when used by the UI
 						c.send(REQUEST);
 						(new Thread() {
 							public void run() {
 								try {
+									// update UI with the received data
 									System.out.println(c.response());
 								} catch(IOException e) {
 								}
