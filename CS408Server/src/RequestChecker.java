@@ -2,19 +2,21 @@ import java.io.*;
 import java.net.*;
 
 
-public class requestChecker extends Thread {
+public class RequestChecker extends Thread {
 	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;
+	private DatabaseHandler db;
 
 	/**
 	 * Constructor
 	**/
-	public requestChecker(Socket socket) throws IOException {
+	public RequestChecker(Socket socket) throws IOException {
 		this.socket = socket;
 		out = new PrintWriter(socket.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(
 			socket.getInputStream()));
+		db = new DatabaseHandler();
 	}
 
 	public void run() {
@@ -24,7 +26,10 @@ public class requestChecker extends Thread {
 				switch(req) {
 					case 0: 
 						System.out.println("VISIT");
-						// insert new data to database
+						// get user and booth from the client
+						int user = 0;
+						int booth = 0;
+						db.addTimelog(user,booth);
 						break;
 					case 1: 
 						System.out.println("REQUEST");
