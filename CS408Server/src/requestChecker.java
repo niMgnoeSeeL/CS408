@@ -24,12 +24,14 @@ public class requestChecker extends Thread {
 				switch(req) {
 					case 0: 
 						System.out.println("VISIT");
+						// insert new data to database
 						break;
 					case 1: 
 						System.out.println("REQUEST");
 						(new Thread() {
 							public void run() {
 								try {
+									// execute query in database + analyze received data 
 									Thread.sleep(5000);
 									out.println("OK");
 									System.out.println("Sent ok");
