@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.io.*;
 import java.net.*;
 
-public class gableClient {
+public class GableClient {
 	private static int connectionPort = 4711;
 	private	Socket socket;
 	private	PrintWriter out;
@@ -52,7 +52,7 @@ public class gableClient {
 	/**
 	 * Constructor
 	 **/
-	public gableClient() {
+	public GableClient() {
 		try {
 			socket = new Socket("143.248.236.160", connectionPort);
 			out = new PrintWriter(socket.getOutputStream(), true);
