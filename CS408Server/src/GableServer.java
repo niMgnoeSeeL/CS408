@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 
 
-public class gableServer {
+public class GableServer {
 	private static int connectionPort = 4711;
     
 	public static void main(String[] args) {  
@@ -10,7 +10,7 @@ public class gableServer {
 			ServerSocket serverSocket = new ServerSocket(connectionPort); 
 			System.out.println("Server started listening on port: " + connectionPort);
 			while (true) {
-				new requestChecker(serverSocket.accept()).start();
+				new RequestChecker(serverSocket.accept()).start();
 			}
 			//serverSocket.close();
 		} catch (IOException e) {
