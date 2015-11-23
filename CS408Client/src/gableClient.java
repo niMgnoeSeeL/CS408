@@ -54,7 +54,7 @@ public class gableClient {
 	 **/
 	public gableClient() {
 		try {
-			socket = new Socket("localhost", connectionPort);
+			socket = new Socket("143.248.236.160", connectionPort);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
