@@ -10,13 +10,14 @@ public class gableClient {
 	
 	private static final int VISIT = 0;
 	private static final int REQUEST = 1;
+	private static final int DB = 2;
 
 	public static void main(String[] args) {
 		try {
 			final gableClient c = new gableClient();
 			Scanner scan = new Scanner(System.in);
 			while(true) {
-				System.out.println("0 or 1?");
+				System.out.println("0 or 1 or 2?");
 				int nextAct = Integer.parseInt(scan.next());
 				switch(nextAct) {
 					case VISIT: 
@@ -33,6 +34,12 @@ public class gableClient {
 							} 
 						}).start();
 						break;
+					case DB:
+						c.send(DB);
+						try{
+							System.out.println(c.response());
+						} catch (IOException e){
+						}
 				}
 			}
 		} catch(IOException e) {
