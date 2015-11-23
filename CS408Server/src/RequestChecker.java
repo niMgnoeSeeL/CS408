@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 public class RequestChecker extends Thread {
 	private Socket socket;
 	private BufferedReader in;
-	private PrintWriter out;
+	private static PrintWriter out;
 <<<<<<< HEAD:CS408Server/src/requestChecker.java
 	private OutputStream sos = null;
 	private ObjectOutputStream soos = null;
@@ -20,7 +20,7 @@ public class RequestChecker extends Thread {
 	private ResultSet rs = null;
 
 =======
-	private DatabaseHandler db;
+	private static DatabaseHandler db;
 >>>>>>> 88d84f955118ae8ea5e34a360effe8eeea063ac1:CS408Server/src/RequestChecker.java
 
 	/**
@@ -75,6 +75,21 @@ public class RequestChecker extends Thread {
 						out.println(result);
 						System.out.println("Sent ok");
 						break;
+					case 3:
+						System.out.println("GET POPULAR");
+						(new Thread() {
+							public void run() {
+								try {
+									ResultSet rs = db.getPopular();
+									while(rs.next()) {
+										out.println(rs.getString("booth.name"));
+									}
+								} catch(InterruptedException e) {
+								}
+							} 
+						}).start();
+						break;
+						
 				}
 			}
 			// out.close();
