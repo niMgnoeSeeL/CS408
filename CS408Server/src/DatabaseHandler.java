@@ -46,9 +46,30 @@ public class DatabaseHandler {
 		}
 	}
 
+	/**
+	 * The top 3 most popular booths
+	 * @returns ResultSet, the retrieved data from the database
+	 */
 	public ResultSet getPopular() {
 		try {
 			String query = "SELECT booth.name FROM booth, timelog WHERE booth.id = timelog.booth GROUP BY "
+					+ "booth.id ORDER BY SUM(TIMESTAMPDIFF(MINUTE,timelog.startTime,timelog.endTime)) "
+					+ "DESC LIMIT 3";
+			return statement.executeQuery(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Simple recommendations for users based on popular booths which hasn't been visited yet
+	 * @param String user, the user which will get the recommendation
+	 * @returns ResultSet, the retrieved data from the database
+	 */
+	public ResultSet getRecommended(String user) {
+		try {
+			String query = "SELECT booth.name FROM booth, timelog WHERE booth.id = timelog.booth AND " 
+					+ "booth.id NOT IN (SELECT booth FROM timelog WHERE userID="+user+") GROUP BY "
 					+ "booth.id ORDER BY SUM(TIMESTAMPDIFF(MINUTE,timelog.startTime,timelog.endTime)) "
 					+ "DESC LIMIT 3";
 			return statement.executeQuery(query);

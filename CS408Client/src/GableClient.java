@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.io.*;
 import java.net.*;
 
@@ -14,7 +15,7 @@ public class GableClient {
 
 	public static void main(String[] args) {
 		try {
-			final gableClient c = new gableClient();
+			final GableClient c = new GableClient();
 			Scanner scan = new Scanner(System.in);
 			while(true) {
 				System.out.println("0 or 1 or 2?");
@@ -22,11 +23,13 @@ public class GableClient {
 				switch(nextAct) {
 					case VISIT: 
 						// when used by the beacon detecter
-						c.send(VISIT);
+						String[] val = {0,0};
+						c.send(VISIT, val);
 						break;
 					case REQUEST:
 						// when used by the UI
-						c.send(REQUEST);
+						String[] val2 = {};
+						c.send(REQUEST, val2);
 						(new Thread() {
 							public void run() {
 								try {
@@ -71,16 +74,23 @@ public class GableClient {
 	 * @param int message, the request type
 	 * @throws IOException if the message couldn't be sent over the stream
 	 **/
-	public void send(int message) throws IOException {
+	public void send(int message, String[] args) throws IOException {
 		out.println(message);
+		for(String s : args) {
+			out.println(s);
+		}
 	}
 	
 	/**
-	 * @return String response, the received response
+	 * @return ArrayList<String> response, the received response
 	 * @throws IOException if the stream is closed
 	 **/
-	public String response() throws IOException {
-		return in.readLine();
+	public ArrayList<String> response() throws IOException {
+		ArrayList<String> response = new ArrayList<String>();
+		while(in.ready()) {
+			response.add(in.readLine());
+		}
+		return response;
 	}
 	
 	/**

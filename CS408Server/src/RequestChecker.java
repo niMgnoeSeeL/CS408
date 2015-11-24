@@ -39,48 +39,25 @@ public class RequestChecker extends Thread {
 	public void run() {
 		try {
 			while(true) {
-				int req = Integer.parseInt(in.readLine());
+				final int req = Integer.parseInt(in.readLine());
 				switch(req) {
 					case 0: 
 						System.out.println("VISIT");
 						// get user and booth from the client
 						int user = 0;
 						int booth = 0;
-						db.addTimelog(user,booth);
+						db.addTimelog(in.readLine(),in.readLine());
 						break;
-					case 1: 
-						System.out.println("REQUEST");
+					default:
 						(new Thread() {
 							public void run() {
 								try {
-									// execute query in database + analyze received data 
-									Thread.sleep(5000);
-									out.println("OK");
-									System.out.println("Sent ok");
-								} catch(InterruptedException e) {
-								}
-							} 
-						}).start();
-						break;
-					case 2:
-						System.out.println("Connecting to the server...");
-						con = DriverManager.getConnection("jdbc:mysql://localhost", "root", "bionic24");
-						System.out.println("Connecting finished!");
-						psmt = con.prepareStatement("SHOW DATABASES");
-						rs = psmt.executeQuery();
-						String result = null;
-						while(rs.next()){
-							result += rs.getString(1);
-						}
-						out.println(result);
-						System.out.println("Sent ok");
-						break;
-					case 3:
-						System.out.println("GET POPULAR");
-						(new Thread() {
-							public void run() {
-								try {
-									ResultSet rs = db.getPopular();
+									ResultSet rs;
+									if(req == 1) {
+										rs = db.getPopular();
+									} else if(req == 2) {
+										rs = db.getRecommended(in.readLine());
+									}
 									while(rs.next()) {
 										out.println(rs.getString("booth.name"));
 									}
@@ -88,8 +65,7 @@ public class RequestChecker extends Thread {
 								}
 							} 
 						}).start();
-						break;
-						
+						break;	
 				}
 			}
 			// out.close();
