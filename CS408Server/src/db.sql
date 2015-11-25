@@ -39,3 +39,4 @@ insert into Timelog values(1,5,'2015-12-11 15:10:00',NULL,-1);
 insert into Timelog values(2,1,'2015-12-11 11:30:00','2015-12-11 11:35:00',0);
 insert into Timelog values(2,5,'2015-12-11 11:45:00',NULL,1);
 insert into Timelog values(0,3,'2015-12-11 11:20:00',NULL,0);
+insert into Timelog values(0,3,'2015-12-11 11:20:00',NULL,0);
