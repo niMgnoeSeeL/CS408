@@ -21,12 +21,23 @@ public class DatabaseHandler {
 
 	public DatabaseHandler() {
 		try {
-			Class.forName(PATH);
+			//Class.forName(PATH);
 			myCon = DriverManager.getConnection(CON, USER, PASS);
 			statement = myCon.createStatement();
-		} catch (ClassNotFoundException e) {
+		} /*catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
+		} */catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
+	public void tempTimelog(){
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(new Date());
+			String query = "insert into timelog values(0, 0, '" + currentTime + "', '" + currentTime + "', " + "null)";
+			statement.executeUpdate(query);
+		} catch (SQLException e){
 			e.printStackTrace();
 		}
 	}
@@ -35,9 +46,9 @@ public class DatabaseHandler {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(new Date());
-			String query = "UPDATE timelog SET endtime=" + currentTime + " WHERE endTime IS NULL AND user =" + string;
+			/*String query = "UPDATE timelog SET endtime=" + currentTime + " WHERE endTime IS NULL AND user =" + string;
 			statement.executeUpdate(query);
-			query = "INSERT INTO timelog VALUES(" + string + "," + string2 + "," + currentTime + ",NULL)";
+			*/String query = "INSERT INTO timelog VALUES(" + string + "," + string2 + ",'" + currentTime + "','2012-05-05 00:00:01' ,NULL)";
 			statement.executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -39,7 +39,11 @@ public class RequestChecker extends Thread {
 					// get user and booth from the client
 					int user = 0;
 					int booth = 0;
-					db.addTimelog("0", "0");
+					db.addTimelog("123", "0");
+					break;
+				case 3:
+					System.out.println("KEEP");
+					db.tempTimelog();
 					break;
 				default:
 					(new Thread() {

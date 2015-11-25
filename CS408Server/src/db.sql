@@ -30,6 +30,8 @@ PRIMARY KEY(userID,booth,startTime),
 FOREIGN KEY (booth) REFERENCES booth(id)
 );
 
+insert into Booth values(0, '0');
+
 insert into Booth values(0, 'Google','0,0','Here is the description of Googles booth');
 insert into Booth values(1, 'Samsung','0,1','Samsung has an even longer description that goes on an on forever');
 insert into Booth values(2, 'LG','1,0',NULL);

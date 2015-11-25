@@ -12,12 +12,33 @@ public class GableClient {
 	private static final int VISIT = 0;
 	private static final int REQUEST = 1;
 	private static final int DB = 2;
+	private static final int KEEP = 3;
 
 	public static void main(String[] args) {
 		try {
 			final GableClient c = new GableClient();
 			Scanner scan = new Scanner(System.in);
 			String[] queryVal = {};
+			
+			Thread timelogThread = new Thread(){
+				public void run(){
+					while(true){
+						try {
+							Thread.sleep(5000);
+							c.send(KEEP, queryVal);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			};
+			
+			timelogThread.start();
+			
 			while (true) {
 				System.out.println("0 or 1 or 2?");
 				int nextAct = Integer.parseInt(scan.next());
