@@ -1,5 +1,5 @@
 CREATE DATABASE able;
-
+use able;
 CREATE TABLE booth (
 id INT,
 name VARCHAR(10) NOT NULL,
