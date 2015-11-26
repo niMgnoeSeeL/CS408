@@ -80,7 +80,7 @@ public class GableClient {
 	 **/
 	public GableClient() {
 		try {
-			socket = new Socket("130.237.223.175", connectionPort);
+			socket = new Socket("143.248.196.119", connectionPort);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (UnknownHostException e) {
