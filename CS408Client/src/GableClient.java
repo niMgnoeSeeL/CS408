@@ -25,6 +25,7 @@ public class GableClient {
 					while(true){
 						try {
 							Thread.sleep(5000);
+							queryVal = {};
 							c.send(KEEP, queryVal);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
@@ -45,26 +46,28 @@ public class GableClient {
 				switch (nextAct) {
 				case VISIT:
 					// when used by the beacon detecter
+					queryVal = {"0","0","0"};
 					c.send(VISIT, queryVal);
 					break;
 				case REQUEST:
 					// when used by the UI
-					String[] val2 = {};
+					queryVal = {"0"};
 					c.send(REQUEST, queryVal);
 					(new Thread() {
 						public void run() {
 							try {
 								// update UI with the received data
-								System.out.println(c.response());
+								System.out.println(c.response().toString());
 							} catch (IOException e) {
 							}
 						}
 					}).start();
 					break;
 				case DB:
+					queryVal = {"1","0"};
 					c.send(DB, queryVal);
 					try {
-						System.out.println(c.response());
+						System.out.println(c.response().toString());
 					} catch (IOException e) {
 					}
 				}
@@ -108,11 +111,11 @@ public class GableClient {
 	 * @throws IOException
 	 *             if the stream is closed
 	 **/
-	// TODO
 	public ArrayList<String> response() throws IOException {
 		ArrayList<String> response = new ArrayList<String>();
-		while (!in.ready()) {
-			response.add(in.readLine());
+		String s;
+		while (!(s = in.readLine()).equals("-1")) {
+			response.add(s);
 		}
 		return response;
 	}

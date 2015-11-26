@@ -21,12 +21,9 @@ public class DatabaseHandler {
 
 	public DatabaseHandler() {
 		try {
-			//Class.forName(PATH);
 			myCon = DriverManager.getConnection(CON, USER, PASS);
 			statement = myCon.createStatement();
-		} /*catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} */catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -42,13 +39,16 @@ public class DatabaseHandler {
 		}
 	}
 
-	public void addTimelog(String string, String string2) {
+	public void addTimelog(int op, String user, String booth) {
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(new Date());
-			/*String query = "UPDATE timelog SET endtime=" + currentTime + " WHERE endTime IS NULL AND user =" + string;
-			statement.executeUpdate(query);
-			*/String query = "INSERT INTO timelog VALUES(" + string + "," + string2 + ",'" + currentTime + "','2012-05-05 00:00:01' ,NULL)";
+			String query;
+			if(op == 0) {
+				query = "UPDATE timelog SET endtime=" + currentTime + " WHERE endTime IS NULL AND user =" + user;		
+			} else {
+				query = "INSERT INTO timelog VALUES(" + user + "," + booth + ",'" + currentTime + "',NULL ,0)";				
+			}
 			statement.executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,9 +62,11 @@ public class DatabaseHandler {
 	 */
 	public ResultSet getPopular() {
 		try {
-			String query = "SELECT booth.name FROM booth, timelog WHERE booth.id = timelog.booth GROUP BY "
-					+ "booth.id ORDER BY SUM(TIMESTAMPDIFF(MINUTE,timelog.startTime,timelog.endTime)) "
-					+ "DESC LIMIT 3";
+			// The weight for currently visiting users is temporarily set to 60
+			String query = "SELECT booth.id FROM booth, timelog WHERE booth.id = timelog.booth " +
+					"GROUP BY booth.id ORDER BY SUM(TIMESTAMPDIFF(MINUTE,timelog.startTime," +
+					"timelog.endTime))+(COUNT(CASE WHEN timelog.endTime IS NULL THEN 1 " +
+					"ELSE NULL END)*60) DESC LIMIT 3";
 			return statement.executeQuery(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,10 +84,11 @@ public class DatabaseHandler {
 	 */
 	public ResultSet getRecommended(String user) {
 		try {
-			String query = "SELECT booth.name FROM booth, timelog WHERE booth.id = timelog.booth AND "
-					+ "booth.id NOT IN (SELECT booth FROM timelog WHERE userID=" + user + ") GROUP BY "
-					+ "booth.id ORDER BY SUM(TIMESTAMPDIFF(MINUTE,timelog.startTime,timelog.endTime)) "
-					+ "DESC LIMIT 3";
+			String query = "SELECT booth.id FROM booth, timelog WHERE booth.id = timelog.booth AND " +
+					"booth.id NOT IN (SELECT booth FROM timelog WHERE userID=" + user + ") GROUP BY " +
+					"booth.id ORDER BY SUM(TIMESTAMPDIFF(MINUTE,timelog.startTime," +
+					"timelog.endTime))+(COUNT(CASE WHEN timelog.endTime IS NULL THEN 1 " +
+					"ELSE NULL END)*60) DESC LIMIT 3";
 			return statement.executeQuery(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
