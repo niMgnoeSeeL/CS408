@@ -9,7 +9,6 @@ import java.io.*;
 
 public class GableServer {
 	private static int connectionPort = 4711;
-	private static final String PATH = "path";
 	private static final String CON = "jdbc:mysql://localhost/able";
 	private static final String USER = "root";
 	private static final String PASS = "bionic24";

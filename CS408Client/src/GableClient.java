@@ -18,14 +18,13 @@ public class GableClient {
 		try {
 			final GableClient c = new GableClient();
 			Scanner scan = new Scanner(System.in);
-			String[] queryVal = {};
 			
 			Thread timelogThread = new Thread(){
 				public void run(){
 					while(true){
 						try {
 							Thread.sleep(5000);
-							queryVal = {};
+							String[] queryVal = {};
 							c.send(KEEP, queryVal);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
@@ -46,13 +45,13 @@ public class GableClient {
 				switch (nextAct) {
 				case VISIT:
 					// when used by the beacon detecter
-					queryVal = {"0","0","0"};
-					c.send(VISIT, queryVal);
+					String[] queryVal2 = {"0","0","0"};
+					c.send(VISIT, queryVal2);
 					break;
 				case REQUEST:
 					// when used by the UI
-					queryVal = {"0"};
-					c.send(REQUEST, queryVal);
+					String[] queryVal3 = {"0"};
+					c.send(REQUEST, queryVal3);
 					(new Thread() {
 						public void run() {
 							try {
@@ -64,8 +63,8 @@ public class GableClient {
 					}).start();
 					break;
 				case DB:
-					queryVal = {"1","0"};
-					c.send(DB, queryVal);
+					String[] queryVal4 = {"1","0"};
+					c.send(DB, queryVal4);
 					try {
 						System.out.println(c.response().toString());
 					} catch (IOException e) {
@@ -81,7 +80,7 @@ public class GableClient {
 	 **/
 	public GableClient() {
 		try {
-			socket = new Socket("143.248.196.119", connectionPort);
+			socket = new Socket("130.237.223.175", connectionPort);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (UnknownHostException e) {

@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
  * @version 22.11.2015
  */
 public class DatabaseHandler {
-	private static final String PATH = "path";
 	private static final String CON = "jdbc:mysql://localhost/able";
 	private static final String USER = "root";
 	private static final String PASS = "bionic24";
