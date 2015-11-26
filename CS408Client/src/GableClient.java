@@ -78,7 +78,7 @@ public class GableClient {
 	 **/
 	public GableClient() {
 		try {
-			socket = new Socket("143.248.236.121", connectionPort);
+			socket = new Socket("143.248.196.119", connectionPort);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (UnknownHostException e) {
@@ -108,9 +108,10 @@ public class GableClient {
 	 * @throws IOException
 	 *             if the stream is closed
 	 **/
+	// TODO
 	public ArrayList<String> response() throws IOException {
 		ArrayList<String> response = new ArrayList<String>();
-		while (in.ready()) {
+		while (!in.ready()) {
 			response.add(in.readLine());
 		}
 		return response;
