@@ -110,11 +110,11 @@ public class GableClient {
 	 * @throws IOException
 	 *             if the stream is closed
 	 **/
-	public ArrayList<String> response() throws IOException {
-		ArrayList<String> response = new ArrayList<String>();
+	public ArrayList<Integer> response() throws IOException {
+		ArrayList<Integer> response = new ArrayList<Integer>();
 		String s;
 		while (!(s = in.readLine()).equals("-1")) {
-			response.add(s);
+			response.add(Integer.parseInt(s));
 		}
 		return response;
 	}
