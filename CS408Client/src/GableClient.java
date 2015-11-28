@@ -9,8 +9,8 @@ public class GableClient {
 	private PrintWriter out;
 	private BufferedReader in;
 
-	private static final int VISIT = 0;
-	private static final int REQUEST = 1;
+	public static final int VISIT = 0;
+	public static final int REQUEST = 1;
 	private static final int DB = 2;
 	private static final int KEEP = 3;
 
