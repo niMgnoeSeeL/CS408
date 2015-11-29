@@ -46,18 +46,17 @@ public class GableClient {
 						int[] args = {0,1,-1};
 						c.send(VISIT, args);
 					} else {
-						int[] args = {1,2,3};
-						c.send(VISIT, args);
+						int[] args2 = {1,2,3};
+						c.send(VISIT, args2);
 					}
-					break;
-				case REQUEST:
+				} else {
 					// when used by the UI
 					if(nextAct == 2) {
-						int[] args = {0};
-						c.send(REQUEST, queryVal3);	
+						int[] args3 = {0};
+						c.send(REQUEST, args3);	
 					} else {
-						int[] args = {1,1};
-						c.send(REQUEST, queryVal3);
+						int[] args4 = {1,1};
+						c.send(REQUEST, args4);
 					}
 					(new Thread() {
 						public void run() {
@@ -68,7 +67,6 @@ public class GableClient {
 							}
 						}
 					}).start();
-					break;
 				}
 			}
 		} catch (IOException e) {
