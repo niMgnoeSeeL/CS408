@@ -33,17 +33,11 @@ public class RequestChecker extends Thread {
 		try {
 			while (true) {
 				int req = Integer.parseInt(in.readLine());
-				switch (req) {
-				case 0:
+				if(req == 0) {
 					System.out.println("VISIT");
 					// get user and booth from the client
 					db.addTimelog(Integer.parseInt(in.readLine()),in.readLine(), in.readLine());
-					break;
-				case 3:
-					System.out.println("KEEP");
-					db.tempTimelog();
-					break;
-				default:
+				} else {
 					final int op = Integer.parseInt(in.readLine());
 					(new Thread() {
 						public void run() {
@@ -60,7 +54,6 @@ public class RequestChecker extends Thread {
 							out.println("-1");
 						}
 					}).start();
-					break;
 				}
 			}
 			// out.close();
