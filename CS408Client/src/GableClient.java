@@ -98,10 +98,10 @@ public class GableClient {
 	 * @throws IOException
 	 *             if the message couldn't be sent over the stream
 	 **/
-	public void send(int message, String[] args) throws IOException {
+	public void send(int message, int[] args) throws IOException {
 		out.println(message);
-		for (String s : args) {
-			out.println(s);
+		for (int i : args) {
+			out.println(i);
 		}
 	}
 
