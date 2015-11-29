@@ -11,8 +11,6 @@ public class GableClient {
 
 	public static final int VISIT = 0;
 	public static final int REQUEST = 1;
-	private static final int DB = 2;
-	private static final int KEEP = 3;
 
 	public static void main(String[] args) {
 		try {
@@ -24,8 +22,8 @@ public class GableClient {
 					while(true){
 						try {
 							Thread.sleep(5000);
-							String[] queryVal = {};
-							c.send(KEEP, queryVal);
+							int[] queryVal = {1,0,0};
+							c.send(VISIT, queryVal);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -40,18 +38,27 @@ public class GableClient {
 			timelogThread.start();
 			
 			while (true) {
-				System.out.println("0 or 1 or 2?");
+				System.out.println("0, 1, 2 or 3?");
 				int nextAct = Integer.parseInt(scan.next());
-				switch (nextAct) {
-				case VISIT:
+				if(nextAct /2 == VISIT) {
 					// when used by the beacon detecter
-					String[] queryVal2 = {"0","0","0"};
-					c.send(VISIT, queryVal2);
+					if(nextAct == 0) {
+						int[] args = {0,1,-1};
+						c.send(VISIT, args);
+					} else {
+						int[] args = {1,2,3};
+						c.send(VISIT, args);
+					}
 					break;
 				case REQUEST:
 					// when used by the UI
-					String[] queryVal3 = {"0"};
-					c.send(REQUEST, queryVal3);
+					if(nextAct == 2) {
+						int[] args = {0};
+						c.send(REQUEST, queryVal3);	
+					} else {
+						int[] args = {1,1};
+						c.send(REQUEST, queryVal3);
+					}
 					(new Thread() {
 						public void run() {
 							try {
@@ -62,13 +69,6 @@ public class GableClient {
 						}
 					}).start();
 					break;
-				case DB:
-					String[] queryVal4 = {"1","0"};
-					c.send(DB, queryVal4);
-					try {
-						System.out.println(c.response().toString());
-					} catch (IOException e) {
-					}
 				}
 			}
 		} catch (IOException e) {
