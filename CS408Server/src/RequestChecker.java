@@ -8,14 +8,14 @@ import java.sql.PreparedStatement;
 
 public class RequestChecker extends Thread {
 	private Socket socket;
-	private BufferedReader in;
-	private static PrintWriter out;
+	private final BufferedReader in;
+	private final PrintWriter out;
 	private OutputStream sos = null;		// Are sos and soos used?
 	private ObjectOutputStream soos = null;
 	private Connection con = null;
 	private PreparedStatement psmt = null;
 	private ResultSet rs = null;
-	private static DatabaseHandler db;
+	private final DatabaseHandler db;
 
 	/**
 	 * Constructor
@@ -44,7 +44,7 @@ public class RequestChecker extends Thread {
 					db.tempTimelog();
 					break;
 				default:
-					static int op = Integer.parseInt(in.readLine());
+					final int op = Integer.parseInt(in.readLine());
 					(new Thread() {
 						public void run() {
 							ResultSet rs;
